@@ -1,0 +1,32 @@
+.header ul {
+  display: flex;
+
+  margin: 2rem 0 0 0;
+  width: fit-content;
+
+  border: 1px solid #fff;
+}
+
+.header li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 3rem;
+  min-height: 3rem;
+
+  border: 1px solid #fff;
+}
+
+.header li:first-child {
+  width: 4.5rem;
+}
+
+.header li:nth-child(2) {
+  width: 20rem;
+}
+
+.header span {
+  margin: 0 0 -0.4rem 0;
+}

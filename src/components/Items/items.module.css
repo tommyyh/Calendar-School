@@ -1,0 +1,7 @@
+.items ul {
+  display: flex;
+  width: fit-content;
+
+  border: 1px solid #fff;
+  border-top: none;
+}
