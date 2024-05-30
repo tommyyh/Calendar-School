@@ -4,6 +4,7 @@ import Selection from '../Selection/Selection';
 import Header from '../Header/Header';
 import Items from '../Items/Items';
 import Insert from '../Insert/Insert';
+import DateInsert from '../DateInsert/DateInsert';
 
 const months = {
   1: 'leden',
@@ -35,7 +36,9 @@ const Calendar = () => {
   const currentMonthDigit = currentDate.getMonth() + 1;
   const currentYear = currentDate.getFullYear();
 
-  const [insertOpen, setInsertOpen] = useState(true);
+  const [insertOpen, setInsertOpen] = useState(false);
+  const [dateInsertOpen, setDateInsertOpen] = useState(false);
+  const [dateInsertKod, setDateInsertKod] = useState('');
   const [date, setDate] = useState({
     year: currentYear,
     month: currentMonthDigit,
@@ -44,13 +47,15 @@ const Calendar = () => {
   const [items, setItems] = useState([
     {
       kod: 'S30-1',
-      title: 'Tomas je kokot a ma krivy pero',
+      title: 'Tomas je kokot a ma krivy pero Tomas je kokot a ma krivy pero',
       duration: ['2024-05-10', '2024-05-15'],
+      status: '',
     },
     {
       kod: 'S30-2',
       title: 'Another item with specific duration',
-      duration: ['2024-05-20', '2024-05-22'],
+      duration: ['2024-05-1', '2024-05-15'],
+      status: '',
     },
   ]);
 
@@ -75,6 +80,14 @@ const Calendar = () => {
           items={items}
         />
       )}
+      {dateInsertOpen && (
+        <DateInsert
+          setDateInsertOpen={setDateInsertOpen}
+          setItems={setItems}
+          items={items}
+          dateInsertKod={dateInsertKod}
+        />
+      )}
       <Selection
         date={date}
         setDate={setDate}
@@ -82,7 +95,13 @@ const Calendar = () => {
         setInsertOpen={setInsertOpen}
       />
       <Header date={date} months={months} />
-      <Items date={date} items={items} />
+      <Items
+        date={date}
+        items={items}
+        setDateInsertKod={setDateInsertKod}
+        setDateInsertOpen={setDateInsertOpen}
+        setItems={setItems}
+      />
     </div>
   );
 };

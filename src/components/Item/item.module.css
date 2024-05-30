@@ -9,6 +9,7 @@
 
   border: 1px solid #fff;
   border-top: none;
+  cursor: pointer;
 }
 
 .item li:first-child {
@@ -22,4 +23,29 @@
 .coveredDay {
   background: rgb(254, 86, 86);
   /* 14EAE2 */
+}
+
+
+
+#itemNew {
+  background: rgb(254, 86, 86);
+}
+
+#itemPending {
+  background: rgb(255, 149, 43);
+}
+
+#itemFinished {
+  background: rgb(43, 255, 156);
+}
+
+
+
+
+/* Smaz nebo si GAYYYY */
+#kokot {
+  align-items: flex-start;
+  padding: 0 0 0 1rem;
+  overflow-x: auto;
+  white-space: nowrap;
 }
