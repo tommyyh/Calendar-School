@@ -8,10 +8,10 @@ const DateInsert = ({ setDateInsertOpen, setItems, items, dateInsertKod }) => {
     status: 'new',
   });
 
+  const originItemIndex = items.findIndex((x) => x.kod === dateInsertKod);
+
   const onSubmit = (e) => {
     e.preventDefault();
-
-    const originItemIndex = items.findIndex((x) => x.kod === dateInsertKod);
 
     if (originItemIndex !== -1) {
       const updatedItems = [...items];
@@ -38,6 +38,12 @@ const DateInsert = ({ setDateInsertOpen, setItems, items, dateInsertKod }) => {
 
       <form onSubmit={onSubmit}>
         <div>
+          <label
+            htmlFor={style.start}
+            style={{ fontSize: '1.4rem', margin: '0 1.5rem 0 0' }}
+          >
+            Start
+          </label>
           <input
             type="date"
             name="start"
@@ -49,6 +55,12 @@ const DateInsert = ({ setDateInsertOpen, setItems, items, dateInsertKod }) => {
         </div>
 
         <div>
+          <label
+            htmlFor={style.end}
+            style={{ fontSize: '1.4rem', margin: '0 1.5rem 0 0' }}
+          >
+            End
+          </label>
           <input
             type="date"
             name="end"
@@ -56,6 +68,7 @@ const DateInsert = ({ setDateInsertOpen, setItems, items, dateInsertKod }) => {
             placeholder="end"
             required
             onChange={(e) => setData({ ...data, end: e.target.value })}
+            min={data.start}
           />
         </div>
 
@@ -71,7 +84,7 @@ const DateInsert = ({ setDateInsertOpen, setItems, items, dateInsertKod }) => {
           </select>
         </div>
 
-        <button className={style.add}>Pridat polozku</button>
+        <button className={style.add}>Ulozit</button>
       </form>
     </div>
   );

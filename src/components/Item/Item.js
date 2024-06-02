@@ -7,14 +7,16 @@ const Item = ({
   setDateInsertOpen,
   setDateInsertKod,
   setItems,
+  items,
 }) => {
-  const { kod, title, duration } = item;
+  const { kod, title, duration, status, parentKod } = item;
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const [childOpen, setChildOpen] = useState(false);
 
   let coveredDays = [];
   let statusClass = 'new';
 
-  switch (item.status) {
+  switch (status) {
     case 'new':
       statusClass = style.itemNew;
       break;
@@ -24,8 +26,11 @@ const Item = ({
     case 'finished':
       statusClass = style.itemFinished;
       break;
+    default:
+      break;
   }
 
+  // Ukazem jaky dny jsou vybarveny podle duration
   if (duration && duration.length > 0) {
     const [startYear, startMonth, startDay] = duration[0]
       .split('-')
@@ -45,48 +50,153 @@ const Item = ({
   }
 
   const removeItem = () => {
-    setItems((currentItems) => currentItems.filter((item) => item.kod !== kod));
+    setItems((currentItems) => currentItems.filter((i) => i.kod !== kod));
   };
 
-  return (
-    <ul className={style.item}>
-      <li
-        onMouseEnter={() => setDeleteOpen(true)}
-        onMouseLeave={() => setDeleteOpen(false)}
-      >
-        {deleteOpen ? (
-          <span
-            onClick={removeItem}
-            style={{ background: 'red', color: '#fff' }}
-          >
-            Smazat
-          </span>
-        ) : (
-          kod
-        )}
-      </li>
-      <li id={style.kokot}>{title}</li>
-      {date.days.map((day, index) => {
-        const isCovered = coveredDays.some(
-          (coveredDay) =>
-            coveredDay.year === date.year &&
-            coveredDay.month === date.month &&
-            coveredDay.day === day.date
-        );
+  const itemChildren = items.filter((x) => x.parentKod === kod);
+  const itemParent = items.filter((y) => y.kod === parentKod); // Items parent element
 
-        return (
-          <li
-            onClick={() => {
-              setDateInsertKod(kod);
-              setDateInsertOpen(true);
-            }}
-            key={index}
-            className={isCovered ? style.coveredDay : ''}
-            id={isCovered ? statusClass : ''}
-          ></li>
-        );
-      })}
-    </ul>
+  return itemParent[0] ? null : (
+    <>
+      {/* Nadrazeny item */}
+      <ul className={style.item}>
+        <li
+          onMouseEnter={() => setDeleteOpen(true)}
+          onMouseLeave={() => setDeleteOpen(false)}
+        >
+          {deleteOpen ? (
+            <span
+              onClick={removeItem}
+              style={{ background: 'red', color: '#fff' }}
+            >
+              Smazat
+            </span>
+          ) : (
+            kod
+          )}
+        </li>
+        <li id={style.smazat}>
+          {/* Sipka dolu na otevereni */}
+          {itemChildren[0] && (
+            <button onClick={() => setChildOpen(!childOpen)}>
+              {childOpen ? '⌃' : '⌄'}
+            </button>
+          )}
+          {title}
+        </li>
+        {/* Dny  */}
+        {date.days.map((day, index) => {
+          const isCovered = coveredDays.some(
+            (coveredDay) =>
+              coveredDay.year === date.year &&
+              coveredDay.month === date.month &&
+              coveredDay.day === day.date
+          );
+
+          return (
+            <li
+              onClick={() => {
+                setDateInsertKod(kod);
+                setDateInsertOpen(true);
+              }}
+              key={index}
+              className={isCovered ? style.coveredDay : ''}
+              id={isCovered ? statusClass : ''}
+            ></li>
+          );
+        })}
+      </ul>
+
+      {/* Children */}
+      {/* Children */}
+      {/* Children */}
+      {itemChildren[0] &&
+        childOpen &&
+        itemChildren.map((child) => {
+          let childCoveredDays = [];
+          let childStatusClass = 'new';
+
+          switch (child.status) {
+            case 'new':
+              childStatusClass = style.itemNew;
+              break;
+            case 'pending':
+              childStatusClass = style.itemPending;
+              break;
+            case 'finished':
+              childStatusClass = style.itemFinished;
+              break;
+            default:
+              break;
+          }
+
+          if (child.duration && child.duration.length > 0) {
+            const [childStartYear, childStartMonth, childStartDay] =
+              child.duration[0].split('-').map(Number);
+            const [childEndYear, childEndMonth, childEndDay] = child.duration[1]
+              .split('-')
+              .map(Number);
+
+            let childCurrentDate = new Date(
+              childStartYear,
+              childStartMonth - 1,
+              childStartDay
+            );
+
+            while (
+              childCurrentDate <=
+              new Date(childEndYear, childEndMonth - 1, childEndDay)
+            ) {
+              childCoveredDays.push({
+                year: childCurrentDate.getFullYear(),
+                month: childCurrentDate.getMonth() + 1,
+                day: childCurrentDate.getDate(),
+              });
+              childCurrentDate.setDate(childCurrentDate.getDate() + 1);
+            }
+          }
+
+          return (
+            <ul className={`${style.item} ${style.childItem}`} key={child.kod}>
+              <li id={style.hollow}></li>
+              {/* Smazat */}
+              <li id={style.smazat}>
+                <button
+                  onClick={() =>
+                    setItems((currentItems) =>
+                      currentItems.filter((i) => i.kod !== child.kod)
+                    )
+                  }
+                >
+                  X
+                </button>
+                <b>({child.kod})</b>: {child.title}
+              </li>
+              {/* Dny vybarveny a nevybarveny */}
+              {date.days.map((day, index) => {
+                const isChildCovered = childCoveredDays.some(
+                  (coveredDay) =>
+                    coveredDay.year === date.year &&
+                    coveredDay.month === date.month &&
+                    coveredDay.day === day.date
+                );
+
+                return (
+                  <li
+                    onClick={() => {
+                      setDateInsertKod(child.kod);
+                      setDateInsertOpen(true);
+                    }}
+                    key={index}
+                    className={isChildCovered ? style.coveredDay : ''}
+                    id={isChildCovered ? childStatusClass : ''}
+                  ></li>
+                );
+              })}
+            </ul>
+          );
+        })}
+    </>
   );
 };
 

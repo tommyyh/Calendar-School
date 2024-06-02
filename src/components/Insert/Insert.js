@@ -5,9 +5,12 @@ const Insert = ({ setInsertOpen, setItems, items }) => {
   const [data, setData] = useState({
     kod: '',
     title: '',
+    parentKod: '',
   });
 
-  const onSubmit = () => {
+  const onSubmit = (e) => {
+    e.preventDefault();
+
     const date = new Date();
     const today = `${date.getFullYear()}-${
       date.getMonth() + 1
@@ -18,6 +21,7 @@ const Insert = ({ setInsertOpen, setItems, items }) => {
       {
         kod: data.kod,
         title: data.title,
+        parentKod: data.parentKod,
         duration: [today, today],
         status: 'new',
       },
@@ -26,7 +30,7 @@ const Insert = ({ setInsertOpen, setItems, items }) => {
   };
 
   return (
-    <div className={style.insert}>
+    <form className={style.insert} onSubmit={onSubmit}>
       <button onClick={() => setInsertOpen(false)} className={style.close}>
         Zavrit
       </button>
@@ -37,6 +41,7 @@ const Insert = ({ setInsertOpen, setItems, items }) => {
           name="kod"
           id={style.kod}
           placeholder="Kod"
+          required
           onChange={(e) => setData({ ...data, kod: e.target.value })}
         />
       </div>
@@ -45,16 +50,32 @@ const Insert = ({ setInsertOpen, setItems, items }) => {
         <input
           type="text"
           name="title"
+          required
           id={style.item}
           placeholder="Nazev polozky"
           onChange={(e) => setData({ ...data, title: e.target.value })}
         />
       </div>
 
-      <button className={style.add} onClick={onSubmit}>
+      <div>
+        <select
+          name="parentKod"
+          onChange={(e) => setData({ ...data, parentKod: e.target.value })}
+        >
+          <option value="">Kod nadrazene polozky</option>
+          {items.map(
+            (item) =>
+              !item.parentKod && (
+                <option value={`${item.kod}`}>{item.kod}</option>
+              )
+          )}
+        </select>
+      </div>
+
+      <button className={style.add} type="submit">
         Pridat polozku
       </button>
-    </div>
+    </form>
   );
 };
 

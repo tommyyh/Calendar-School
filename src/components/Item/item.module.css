@@ -17,6 +17,7 @@
 }
 
 .item li:nth-child(2) {
+  flex-direction: row;
   width: 20rem;
 }
 
@@ -42,10 +43,47 @@
 
 
 
-/* Smaz nebo si GAYYYY */
-#kokot {
-  align-items: flex-start;
+#smazat {
+  justify-content: flex-start;
   padding: 0 0 0 1rem;
   overflow-x: auto;
   white-space: nowrap;
+  cursor: initial;
+}
+
+#smazat button {
+  min-width: 1.3rem;
+  max-width: 1.3rem;
+  min-height: 1.3rem;
+  max-height: 1.3rem;
+}
+
+/* width */
+#smazat::-webkit-scrollbar {
+  height: 8px;
+}
+
+/* Track */
+#smazat::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+#smazat::-webkit-scrollbar-thumb {
+  background: #949494;
+}
+
+/* Handle on hover */
+#smazat::-webkit-scrollbar-thumb:hover {
+  background: #828282;
+}
+
+
+
+
+#hollow {
+  background: #635BFF;
+  margin: 0 0 0 -1px;
+  width: 4.56rem;
+  border: none;
 }

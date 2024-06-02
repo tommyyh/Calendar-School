@@ -45,6 +45,7 @@ const Items = ({
           setDateInsertKod={setDateInsertKod}
           setDateInsertOpen={setDateInsertOpen}
           setItems={setItems}
+          items={items}
         />
       ))}
     </div>

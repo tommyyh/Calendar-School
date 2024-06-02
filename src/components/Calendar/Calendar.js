@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import style from './calendar.module.css';
 import Selection from '../Selection/Selection';
 import Header from '../Header/Header';
 import Items from '../Items/Items';
@@ -46,16 +45,33 @@ const Calendar = () => {
   });
   const [items, setItems] = useState([
     {
-      kod: 'S30-1',
-      title: 'Tomas je kokot a ma krivy pero Tomas je kokot a ma krivy pero',
-      duration: ['2024-05-10', '2024-05-15'],
+      kod: '1',
+      title:
+        'FJEIF EFJEIJ EFIEJFI EJFIE FEJIJF EI JFIEJF IEF JIEF IEFJEIFJHIEW HFGEUIHGEOJ FEIOJFEIEFO',
+      duration: ['2024-06-10', '2024-06-15'],
       status: '',
+      parentKod: '',
     },
     {
-      kod: 'S30-2',
+      kod: '2',
       title: 'Another item with specific duration',
-      duration: ['2024-05-1', '2024-05-15'],
+      duration: ['2024-06-1', '2024-06-15'],
       status: '',
+      parentKod: '',
+    },
+    {
+      kod: '1-1',
+      title: 'GJIEIGJE',
+      duration: ['2024-06-03', '2024-06-06'],
+      status: '',
+      parentKod: '1',
+    },
+    {
+      kod: '1-2',
+      title: 'gwegweg',
+      duration: ['2024-06-9', '2024-06-20'],
+      status: '',
+      parentKod: '1',
     },
   ]);
 
@@ -65,6 +81,7 @@ const Calendar = () => {
 
     for (let i = 1; i <= lastDayOfMonth; i++) {
       const dayName = getDayName(date.year, date.month, i);
+
       daysArray.push({ date: i, dayName });
     }
 

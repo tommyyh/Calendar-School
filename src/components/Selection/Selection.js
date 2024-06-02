@@ -43,7 +43,6 @@ const Selection = ({ date, setDate, months, setInsertOpen }) => {
         <h5>
           {months[date.month]} {date.year}
         </h5>
-        <button>▼</button>
       </div>
 
       <div>
