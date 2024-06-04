@@ -55,7 +55,7 @@ const Calendar = () => {
     {
       kod: '2',
       title: 'Another item with specific duration',
-      duration: ['2024-06-1', '2024-06-15'],
+      duration: ['2024-06-01', '2024-06-15'],
       status: '',
       parentKod: '',
     },
@@ -69,7 +69,7 @@ const Calendar = () => {
     {
       kod: '1-2',
       title: 'gwegweg',
-      duration: ['2024-06-9', '2024-06-20'],
+      duration: ['2024-06-09', '2024-06-20'],
       status: '',
       parentKod: '1',
     },

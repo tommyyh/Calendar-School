@@ -52,10 +52,20 @@
 }
 
 #smazat button {
-  min-width: 1.3rem;
-  max-width: 1.3rem;
-  min-height: 1.3rem;
-  max-height: 1.3rem;
+  min-width: 1.75rem;
+  max-width: 1.75rem;
+  min-height: 1.75rem;
+  max-height: 1.75rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#smazat button img {
+  width: 110%;
+  height: 110%;
+  object-fit: contain;
 }
 
 /* width */

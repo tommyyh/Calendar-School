@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import style from './item.module.css';
+import Arrow from '../assets/ntb.svg';
+import Smazat from '../assets/mmd.svg';
 
 const Item = ({
   date,
@@ -79,7 +81,15 @@ const Item = ({
           {/* Sipka dolu na otevereni */}
           {itemChildren[0] && (
             <button onClick={() => setChildOpen(!childOpen)}>
-              {childOpen ? '⌃' : '⌄'}
+              {childOpen ? (
+                <img src={Arrow} alt="fefe" />
+              ) : (
+                <img
+                  src={Arrow}
+                  alt="fefe"
+                  style={{ transform: 'rotate(180deg)' }}
+                />
+              )}
             </button>
           )}
           {title}
@@ -168,7 +178,7 @@ const Item = ({
                     )
                   }
                 >
-                  X
+                  <img src={Smazat} alt="fefe" />
                 </button>
                 <b>({child.kod})</b>: {child.title}
               </li>

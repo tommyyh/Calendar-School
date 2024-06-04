@@ -12,9 +12,10 @@ const Insert = ({ setInsertOpen, setItems, items }) => {
     e.preventDefault();
 
     const date = new Date();
-    const today = `${date.getFullYear()}-${
-      date.getMonth() + 1
-    }-${date.getDate()}`;
+    const today = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
+      2,
+      '0'
+    )}-${String(date.getDate()).padStart(2, '0')}`;
 
     setItems([
       ...items,

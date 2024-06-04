@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import style from './dateInsert.module.css';
 
 const DateInsert = ({ setDateInsertOpen, setItems, items, dateInsertKod }) => {
+  const originItemIndex = items.findIndex((x) => x.kod === dateInsertKod);
+  const originItem = items.find((x) => x.kod === dateInsertKod);
   const [data, setData] = useState({
-    start: '',
-    end: '',
+    start: originItem.duration[0],
+    end: originItem.duration[1],
     status: 'new',
   });
-
-  const originItemIndex = items.findIndex((x) => x.kod === dateInsertKod);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -51,6 +51,7 @@ const DateInsert = ({ setDateInsertOpen, setItems, items, dateInsertKod }) => {
             placeholder="Start"
             required
             onChange={(e) => setData({ ...data, start: e.target.value })}
+            value={data.start}
           />
         </div>
 
@@ -69,6 +70,7 @@ const DateInsert = ({ setDateInsertOpen, setItems, items, dateInsertKod }) => {
             required
             onChange={(e) => setData({ ...data, end: e.target.value })}
             min={data.start}
+            value={data.end}
           />
         </div>
 
